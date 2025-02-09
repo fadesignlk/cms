@@ -18,12 +18,12 @@ class ClientController {
         }
     }
 
-    public function list() { // Corrected method name to 'list'
+    public function list() {
         $clients = $this->clientModel->getAllClients();
         include 'views/clients/list.php';
     }
 
-    public function add() { // Corrected method name to 'add'
+    public function add() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'];
             $contactInfo = $_POST['contact_info'];
@@ -64,6 +64,29 @@ class ClientController {
 
         $this->clientModel->deleteClient($id);
         header('Location: index.php?controller=client&action=list');
+    }
+
+    public function bulkAction() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $action = $_POST['action'];
+            $clientIds = $_POST['client_ids'];
+
+            if ($action === 'edit') {
+                // Handle bulk edit
+                foreach ($clientIds as $clientId) {
+                    // Redirect to edit page for each client
+                    header('Location: index.php?controller=client&action=edit&id=' . $clientId);
+                    exit();
+                }
+            } elseif ($action === 'delete') {
+                // Handle bulk delete
+                foreach ($clientIds as $clientId) {
+                    $this->clientModel->deleteClient($clientId);
+                }
+                header('Location: index.php?controller=client&action=list');
+                exit();
+            }
+        }
     }
 }
 ?>

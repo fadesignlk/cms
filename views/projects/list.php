@@ -1,7 +1,7 @@
 <?php include 'includes/header.php'; ?>
-    <h1>Project List</h1>
+    <h1>Projects</h1>
     <a href="index.php?controller=project&action=add">Add New Project</a>
-    <table border="1">
+    <table class="table table-bordered">
         <tr>
             <th>ID</th>
             <th>Client ID</th>
